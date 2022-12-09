@@ -339,6 +339,47 @@ function getDigitalRoot(num) {
  */
 function isBracketsBalanced(/* str */) {
   throw new Error('Not implemented');
+  // const arrayBrackets = [0, 0, 0, 0];
+
+  // let flag = true;
+  // str.split('').forEach((elem) => {
+  //   if (elem === '[') {
+  //     arrayBrackets[0] += 1;
+  //   }
+  //   if (elem === ']') {
+  //     arrayBrackets[0] -= 1;
+  //   }
+  //   if (elem === '(') {
+  //     arrayBrackets[1] += 1;
+  //   }
+  //   if (elem === ')') {
+  //     arrayBrackets[1] -= 1;
+  //   }
+  //   if (elem === '{') {
+  //     arrayBrackets[2] += 1;
+  //   }
+  //   if (elem === '}') {
+  //     arrayBrackets[2] -= 1;
+  //   }
+  //   if (elem === '<') {
+  //     arrayBrackets[3] += 1;
+  //   }
+  //   if (elem === '>') {
+  //     arrayBrackets[3] -= 1;
+  //   }
+
+  //   if (arrayBrackets[0] < 0 || arrayBrackets[1] < 0
+  //     || arrayBrackets[2] < 0 || arrayBrackets[3] < 0) {
+  //     flag = false;
+  //   }
+  // });
+
+  // arrayBrackets.forEach((elem) => {
+  //   if (elem !== 0) {
+  //     flag = false;
+  //   }
+  // });
+  // return flag;
 }
 
 
@@ -362,8 +403,8 @@ function isBracketsBalanced(/* str */) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  return num.toString(n);
 }
 
 
@@ -437,8 +478,76 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function isWin(position, symbol) {
+  // проверка по строчно
+  for (let i = 0; i < position.length; i += 1) {
+    let counter = 0;
+    for (let k = 0; k < position[i].length; k += 1) {
+      if (position[i][k] === symbol) {
+        counter += 1;
+      } else {
+        break;
+      }
+    }
+    if (counter === 3) {
+      return true;
+    }
+    counter = 0;
+  }
+
+  // проверка по столбцам
+  for (let i = 0; i < position.length; i += 1) {
+    let counter = 0;
+    for (let k = 0; k < position[i].length; k += 1) {
+      if (position[k][i] === symbol) {
+        counter += 1;
+      } else {
+        break;
+      }
+    }
+    if (counter === 3) {
+      return true;
+    }
+    counter = 0;
+  }
+
+  // еще есть 2 случая победы - это диагонали
+  let counter = 0;
+  for (let i = 0; i < position.length; i += 1) {
+    if (position[i][i] === symbol) {
+      counter += 1;
+    } else {
+      break;
+    }
+    if (counter === 3) {
+      return true;
+    }
+  }
+
+  counter = 0;
+  for (let i = 0; i < position.length; i += 1) {
+    if (position[i][position.length - i - 1] === symbol) {
+      counter += 1;
+    } else {
+      break;
+    }
+    if (counter === 3) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function evaluateTicTacToePosition(position) {
+  let result;
+  if (isWin(position, 'X')) {
+    result = 'X';
+  }
+  if (isWin(position, '0')) {
+    result = '0';
+  }
+  return result;
 }
 
 
