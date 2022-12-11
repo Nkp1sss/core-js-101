@@ -337,49 +337,44 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
-  // const arrayBrackets = [0, 0, 0, 0];
+function isBracketsBalanced(str) {
+  const openBrackets = ['[', '(', '{', '<'];
+  const closedBrackets = [']', ')', '}', '>'];
 
-  // let flag = true;
-  // str.split('').forEach((elem) => {
-  //   if (elem === '[') {
-  //     arrayBrackets[0] += 1;
-  //   }
-  //   if (elem === ']') {
-  //     arrayBrackets[0] -= 1;
-  //   }
-  //   if (elem === '(') {
-  //     arrayBrackets[1] += 1;
-  //   }
-  //   if (elem === ')') {
-  //     arrayBrackets[1] -= 1;
-  //   }
-  //   if (elem === '{') {
-  //     arrayBrackets[2] += 1;
-  //   }
-  //   if (elem === '}') {
-  //     arrayBrackets[2] -= 1;
-  //   }
-  //   if (elem === '<') {
-  //     arrayBrackets[3] += 1;
-  //   }
-  //   if (elem === '>') {
-  //     arrayBrackets[3] -= 1;
-  //   }
+  const strArray = str.split('');
+  const stack = [];
 
-  //   if (arrayBrackets[0] < 0 || arrayBrackets[1] < 0
-  //     || arrayBrackets[2] < 0 || arrayBrackets[3] < 0) {
-  //     flag = false;
-  //   }
-  // });
+  let result = true;
+  strArray.forEach((elem) => {
+    // если elem является открытой скобкой
+    if (openBrackets.indexOf(elem) !== -1) {
+      stack.push(elem);
+    } else {
+      // если последний элемент не является открытым, возвращаем false.
+      if (openBrackets.indexOf(stack[stack.length - 1]) === -1) {
+        result = false;
+      }
+      /**
+       * если индекс предыдущего элемента(открытой скобки)
+       * !== индексу текущего элемента(закрытой скобки), возвращаем false
+       */
+      if (openBrackets.indexOf(stack[stack.length - 1]) !== closedBrackets.indexOf(elem)) {
+        result = false;
+      }
+      /**
+       * если индекс предыдущего элемента(открытой скобки)
+       * === индексу текущего элемента(закрытой скобки), удаляем из стэка
+       */
+      if (openBrackets.indexOf(stack[stack.length - 1]) === closedBrackets.indexOf(elem)) {
+        stack.pop();
+      }
+    }
+  });
 
-  // arrayBrackets.forEach((elem) => {
-  //   if (elem !== 0) {
-  //     flag = false;
-  //   }
-  // });
-  // return flag;
+  if (result === false) {
+    return false;
+  }
+  return !stack.length;
 }
 
 
